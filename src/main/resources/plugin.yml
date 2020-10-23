@@ -1,0 +1,6 @@
+name: Rocketeer
+version: @version@
+main: me.glaremasters.rocketeer.Rocketeer
+api-version: 1.16
+authors: [ Glare ]
+description: Design and create custom rockets from images
