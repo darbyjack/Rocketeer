@@ -1,18 +1,27 @@
 package me.glaremasters.rocketeer;
 
+import co.aikar.commands.PaperCommandManager;
+import me.glaremasters.rocketeer.cmds.CommandRocketeer;
+import me.glaremasters.rocketeer.listener.RocketListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Rocketeer extends JavaPlugin {
+	private PaperCommandManager manager;
 
 	@Override
 	public void onEnable() {
-		// Plugin startup logic
-
+		this.manager = new PaperCommandManager(this);
+		this.manager.registerCommand(new CommandRocketeer());
+		getServer().getPluginManager().registerEvents(new RocketListener(this), this);
 	}
 
 	@Override
 	public void onDisable() {
 		// Plugin shutdown logic
+	}
+
+	public PaperCommandManager getManager() {
+		return manager;
 	}
 
 }

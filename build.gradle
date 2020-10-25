@@ -1,14 +1,18 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 
-apply plugin: 'java'
+plugins {
+	id "com.github.johnrengelman.shadow" version "5.2.0"
+	id "java"
+}
 
 group = 'me.glaremasters'
 version = '1.0-SNAPSHOT'
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
+	mavenLocal()
 	mavenCentral()
 	maven {
 		name = 'papermc-repo'
@@ -18,10 +22,47 @@ repositories {
 		name = 'sonatype'
 		url = 'https://oss.sonatype.org/content/groups/public/'
 	}
+	maven {
+		name = 'aikar'
+		url = 'https://repo.aikar.co/content/groups/aikar/'
+	}
+	maven {
+		name ="jitpack"
+		url = "https://jitpack.io"
+	}
+	maven {
+		name = "codemc"
+		url = "https://repo.codemc.org/repository/maven-public"
+	}
+}
+
+compileJava {
+	options.compilerArgs += ["-parameters"]
+	options.fork = true
+	options.forkOptions.executable = "javac"
 }
 
 dependencies {
+	compileOnly 'org.spigotmc:spigot:1.16.3-R0.1-SNAPSHOT'
 	compileOnly 'com.destroystokyo.paper:paper-api:1.16.3-R0.1-SNAPSHOT'
+	
+	implementation 'co.aikar:acf-paper:0.5.0-SNAPSHOT'
+	implementation 'io.github.bananapuncher714:NBTEditor:7.16'
+	implementation 'ch.jalu:configme:1.2.0-SNAPSHOT'
+	implementation 'com.github.cryptomorin:XSeries:7.5.4'
+}
+
+shadowJar {
+	relocate("co.aikar.commands", "me.glaremasters.rocketeer.libs.acf")
+	relocate("co.aikar.locales", "me.glaremasters.rocketeer.libs.locales")
+	relocate("ch.jalu.configme", "me.glaremasters.rocketeer.libs.configme")
+	relocate("io.github.bananapuncher714", "me.glaremasters.rocketeer.libs.nbteditor")
+	relocate("com.cryptomorin.xseries", "me.glaremasters.rocketeer.libs.xseries")
+	archiveFileName = "Rocketeer-${project.version}.jar"
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = "UTF-8"
 }
 
 processResources {
@@ -29,3 +70,5 @@ processResources {
 		filter ReplaceTokens, tokens: [version: version]
 	}
 }
+
+tasks.build.dependsOn tasks.shadowJar
