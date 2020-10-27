@@ -36,6 +36,7 @@ public class CommandRocketeer extends BaseCommand {
 	public void onCreate(final Player player, final String url) throws IOException {
 		final ItemStack stack = RocketUtils.encodeRocket(url, new ItemStack(Material.FIREWORK_ROCKET));
 		player.getInventory().addItem(stack);
+		player.sendMessage("You have created a new rocket from: " + url);
 	}
 
 	@Subcommand("give")
@@ -43,6 +44,7 @@ public class CommandRocketeer extends BaseCommand {
 	@CommandCompletion("@players @rockets")
 	public void onGive(final CommandIssuer issuer, final OnlinePlayer onlinePlayer, final String name) {
 		onlinePlayer.getPlayer().getInventory().addItem(rocketeer.getRocketHandler().getRocket(name));
+		issuer.sendMessage("You have given {player} {rocket}".replace("{player}", onlinePlayer.getPlayer().getName()).replace("{rocket}", name));
 	}
 
 	@Subcommand("save")
@@ -50,6 +52,7 @@ public class CommandRocketeer extends BaseCommand {
 	public void onSave(final Player player, final String name) {
 		final ItemStack stack = player.getInventory().getItemInMainHand();
 		rocketeer.getRocketHandler().addRocket(name, stack);
+		player.sendMessage("You have saved {name} to the list of available rockets".replace("{name}", name));
 	}
 
 	@Subcommand("list")
@@ -62,6 +65,7 @@ public class CommandRocketeer extends BaseCommand {
 	@CommandCompletion("@rockets")
 	public void onRemove(final CommandIssuer issuer, @Values("@rockets") final String name) {
 		rocketeer.getRocketHandler().removeRocket(name);
+		issuer.sendMessage("You have removed {name} from the list of rockets.".replace("{name}", name));
 	}
 
 }
