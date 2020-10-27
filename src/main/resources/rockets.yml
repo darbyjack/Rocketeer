@@ -1,0 +1,9 @@
+rockets:
+  example:
+    ==: org.bukkit.inventory.ItemStack
+    v: 2580
+    type: FIREWORK_ROCKET
+    meta:
+      ==: ItemMeta
+      meta-type: FIREWORK
+      internal: H4sIAAAAAAAAAB1SyZaaQACcl1OSX/HADs4hh96ERnZB0Rtjtw0osirqV+aT4qROtbxXl6rfHx8/P34N7fHMJ86HH3+rLQyTWV7bogVvBJusJJl4M/ItIUCAfpMLWhTut6FnFxJvE129acUma3GcbICePLBMMy9OjlURrkkrrp1MV2Ilzk2Ckt7T0hKituXA07iA+TLWw4MVnjtUmbdnq9zdXjiNxBZfn32dhWbWnlN3trKO8kgC8lO9RH5+7fsrMe733E9e7so6Zr6vsHG2iay9Brj7Wibillh7fR3zV4hmZ8TivrK8NpLQ4VPKi0Dex4HXTTsZpJRV9lq6dro/l2GfaoNqMKLYXBL+KXr0Ztr6lIATXakB2IKoMS0gg7VcmntQ75fpRAkcO0n6GlyvUBRFULGwjdfA9KXkaRELCGYUlLrDNXHhGr/qj4OWcmvUxAPYas3V8UhRWSYsYkmMiwtXoRtDh04lQ2dk3ZxOrPZYMzb6BHNk7mK8m/TkAILraD47I3p4nSHCNTyPYFp5ikNwSNAGBG28prQAgIk4EHCCkXAJdnQQYJOlLcIgbOxuxixatHgGs8JwHxXAm2OqKsYI8tf8tMx3SgcT+I6Wpg3Q/SU5Tlrdoczrg+2mzzfGYpDezdPnOo6GshE8ZM1hUfSdZIE8Xzwn7MGjVVSX/vGU7q1zJGFWQ1M4flrdmGrOUtYMnbQNMdJPl/fA2t6Crcxticj5QauYV9WP+2FUbGmbvGqkjTA7mfv5/QmjPgk7qifP3dXUvIr/H3WTzCDD2RVC/Pnz8Q/qRcFN4gIAAA==

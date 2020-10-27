@@ -3,6 +3,7 @@ package me.glaremasters.rocketeer.utils;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import me.glaremasters.rocketeer.Rocketeer;
 import me.trysam.imagerenderer.api.ParticleImageRenderingAPI;
+import me.trysam.imagerenderer.util.Axis;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Firework;
 import org.bukkit.inventory.ItemStack;
@@ -69,7 +70,7 @@ public class RocketUtils {
 		final BufferedImage image = ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(data)));
 		Bukkit.getScheduler().runTaskLater(rocketeer, () -> {
 			final ParticleImageRenderingAPI renderingAPI = new ParticleImageRenderingAPI(image, firework.getLocation().add(0.0, 20.0, 0.0));
-			//renderingAPI.rotate(Axis.Z, 180.0f);
+			renderingAPI.rotate(Axis.Z, 180.0f);
 			renderingAPI.renderImage(Bukkit.getOnlinePlayers());
 		}, 5L);
 	}
