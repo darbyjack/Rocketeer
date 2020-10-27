@@ -1,15 +1,15 @@
 package me.glaremasters.rocketeer.listener;
 
+import com.destroystokyo.paper.event.player.PlayerLaunchProjectileEvent;
 import me.glaremasters.rocketeer.Rocketeer;
 import me.glaremasters.rocketeer.utils.RocketUtils;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.Firework;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.event.entity.FireworkExplodeEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.io.IOException;
 
@@ -19,6 +19,7 @@ import java.io.IOException;
  * Time: 12:04 PM
  */
 public class RocketListener implements Listener {
+
 	private final Rocketeer rocketeer;
 
 	public RocketListener(final Rocketeer rocketeer) {
@@ -26,25 +27,29 @@ public class RocketListener implements Listener {
 	}
 
 	@EventHandler
-	public void onInteract(final PlayerInteractEvent event) {
-		if (event.getHand() != EquipmentSlot.HAND) {
+	public void onLaunch(final PlayerLaunchProjectileEvent event) {
+		final Projectile projectile = event.getProjectile();
+		final ItemStack itemStack = event.getItemStack();
+		if (!(projectile instanceof Firework)) {
 			return;
 		}
-		final Action action = event.getAction();
-		if (action != Action.RIGHT_CLICK_BLOCK && action != Action.RIGHT_CLICK_AIR) {
+		if (!RocketUtils.isCustomRocket(itemStack)) {
 			return;
 		}
-		final Player player = event.getPlayer();
-		final ItemStack item = player.getInventory().getItemInMainHand();
-		if (item.getType() != Material.FIREWORK_ROCKET) {
-			return;
-		}
+		projectile.getPersistentDataContainer().set(rocketeer.getKey(), PersistentDataType.STRING, RocketUtils.getImage(itemStack));
+	}
 
-		try {
-			RocketUtils.launchRocketEncoded(item, player, rocketeer);
+	@EventHandler
+	public void onExplode(final FireworkExplodeEvent event) {
+		final Firework entity = event.getEntity();
+		if (!entity.getPersistentDataContainer().has(rocketeer.getKey(), PersistentDataType.STRING)) {
+			return;
 		}
-		catch (IOException e) {
-			e.printStackTrace();
+		try {
+			RocketUtils.explode(entity, rocketeer);
+		}
+		catch (IOException ex) {
+			ex.printStackTrace();
 		}
 	}
 

@@ -1,17 +1,12 @@
 package me.glaremasters.rocketeer.utils;
 
-import com.cryptomorin.xseries.XSound;
-import com.cryptomorin.xseries.particles.ParticleDisplay;
-import com.cryptomorin.xseries.particles.XParticle;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import me.glaremasters.rocketeer.Rocketeer;
 import me.trysam.imagerenderer.api.ParticleImageRenderingAPI;
-import me.trysam.imagerenderer.util.Axis;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.Firework;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -49,32 +44,44 @@ public class RocketUtils {
 		ImageIO.write(tempImage, "png", outputStream);
 
 		final String encoded = Base64.getEncoder().encodeToString(outputStream.toByteArray());
-		return NBTEditor.set(sourceItem, encoded, "rocket");
+		return NBTEditor.set(sourceItem, encoded, "rocketeer");
 	}
 
+	/**
+	 * Helper method to check if an ItemStack is a custom rocket or not
+	 *
+	 * @param itemStack the ItemStack to check
+	 * @return custom rocket or not
+	 */
+	public static boolean isCustomRocket(final ItemStack itemStack) {
+		return NBTEditor.contains(itemStack, "rocketeer");
+	}
 
 	/**
-	 * Handles launching the encoded rocket to make it seem like a real rocket
+	 * Explode a firework with an image
 	 *
-	 * @param itemStack the itemstack to check
-	 * @param player    the player that launched it
+	 * @param firework  the firework to explode
 	 * @param rocketeer plugin instance
 	 * @throws IOException
 	 */
-	public static void launchRocketEncoded(final ItemStack itemStack, final Player player, final Rocketeer rocketeer) throws IOException {
-		final Location start = player.getLocation().add(2.0, 3.0, 2.0);
-		final Location end = player.getLocation().add(0.0, 20.0, 0.0);
-
-		XParticle.line(start, end, 3.0, new ParticleDisplay(Particle.FIREWORKS_SPARK, start));
-		player.getWorld().playSound(player.getLocation(), XSound.ENTITY_FIREWORK_ROCKET_LAUNCH.parseSound(), 1.0f, 1.0f);
-
-		final BufferedImage image = ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(NBTEditor.getString(itemStack, "rocket"))));
+	public static void explode(final Firework firework, final Rocketeer rocketeer) throws IOException {
+		final String data = firework.getPersistentDataContainer().get(rocketeer.getKey(), PersistentDataType.STRING);
+		final BufferedImage image = ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(data)));
 		Bukkit.getScheduler().runTaskLater(rocketeer, () -> {
-			final ParticleImageRenderingAPI renderingAPI = new ParticleImageRenderingAPI(image, end);
-			renderingAPI.rotate(Axis.Z, 180.0f);
+			final ParticleImageRenderingAPI renderingAPI = new ParticleImageRenderingAPI(image, firework.getLocation().add(0.0, 20.0, 0.0));
+			//renderingAPI.rotate(Axis.Z, 180.0f);
 			renderingAPI.renderImage(Bukkit.getOnlinePlayers());
-			player.getWorld().playSound(player.getLocation(), XSound.ENTITY_FIREWORK_ROCKET_LARGE_BLAST.parseSound(), 1.0f, 1.0f);
-		}, 20L);
+		}, 5L);
+	}
+
+	/**
+	 * Helper method to get an encoded image from an ItemStack
+	 *
+	 * @param itemStack the ItemStack to get the image from
+	 * @return encoded image as string
+	 */
+	public static String getImage(final ItemStack itemStack) {
+		return NBTEditor.getString(itemStack, "rocketeer");
 	}
 
 }

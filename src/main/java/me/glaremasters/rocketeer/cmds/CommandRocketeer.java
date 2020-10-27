@@ -2,7 +2,9 @@ package me.glaremasters.rocketeer.cmds;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.Dependency;
 import co.aikar.commands.annotation.Subcommand;
+import me.glaremasters.rocketeer.Rocketeer;
 import me.glaremasters.rocketeer.utils.RocketUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,11 +19,12 @@ import java.io.IOException;
  */
 @CommandAlias("rocketeer")
 public class CommandRocketeer extends BaseCommand {
-
+	@Dependency Rocketeer rocketeer;
 
 	@Subcommand("create")
 	public void onCreate(final Player player, final String url) throws IOException {
 		final ItemStack stack = RocketUtils.encodeRocket(url, new ItemStack(Material.FIREWORK_ROCKET));
 		player.getInventory().addItem(stack);
 	}
+
 }
