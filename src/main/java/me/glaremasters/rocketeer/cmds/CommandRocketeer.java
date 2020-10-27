@@ -4,6 +4,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandIssuer;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
+import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Dependency;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
@@ -11,6 +12,7 @@ import co.aikar.commands.annotation.Values;
 import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import me.glaremasters.rocketeer.Rocketeer;
 import me.glaremasters.rocketeer.utils.RocketUtils;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -23,8 +25,11 @@ import java.io.IOException;
  * Time: 7:02 PM
  */
 @CommandAlias("rocketeer")
+@CommandPermission("rocketeer.admin")
 public class CommandRocketeer extends BaseCommand {
-	@Dependency Rocketeer rocketeer;
+
+	@Dependency
+	Rocketeer rocketeer;
 
 	@Subcommand("create")
 	@Syntax("<url>")
@@ -45,6 +50,11 @@ public class CommandRocketeer extends BaseCommand {
 	public void onSave(final Player player, final String name) {
 		final ItemStack stack = player.getInventory().getItemInMainHand();
 		rocketeer.getRocketHandler().addRocket(name, stack);
+	}
+
+	@Subcommand("list")
+	public void onList(CommandIssuer issuer) {
+		issuer.sendMessage("The following rockets exist: " + StringUtils.join(rocketeer.getRocketHandler().getRocketNames(), ", "));
 	}
 
 	@Subcommand("remove")

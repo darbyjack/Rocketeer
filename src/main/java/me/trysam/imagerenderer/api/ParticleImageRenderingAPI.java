@@ -49,7 +49,7 @@ public class ParticleImageRenderingAPI {
 	}
 
 	/**
-	 * @param image The image object
+	 * @param image    The image object
 	 * @param location the location to render it
 	 */
 	public ParticleImageRenderingAPI(BufferedImage image, Location location) {

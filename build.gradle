@@ -48,16 +48,13 @@ dependencies {
 	
 	implementation 'co.aikar:acf-paper:0.5.0-SNAPSHOT'
 	implementation 'io.github.bananapuncher714:NBTEditor:7.16'
-	implementation 'ch.jalu:configme:1.2.0-SNAPSHOT'
-	implementation 'com.github.cryptomorin:XSeries:7.5.4'
 }
 
 shadowJar {
+	minimize()
 	relocate("co.aikar.commands", "me.glaremasters.rocketeer.libs.acf")
 	relocate("co.aikar.locales", "me.glaremasters.rocketeer.libs.locales")
-	relocate("ch.jalu.configme", "me.glaremasters.rocketeer.libs.configme")
 	relocate("io.github.bananapuncher714", "me.glaremasters.rocketeer.libs.nbteditor")
-	relocate("com.cryptomorin.xseries", "me.glaremasters.rocketeer.libs.xseries")
 	archiveFileName = "Rocketeer-${project.version}.jar"
 }
 

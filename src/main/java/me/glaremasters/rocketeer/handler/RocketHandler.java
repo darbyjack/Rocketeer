@@ -19,10 +19,10 @@ import java.util.Map;
  */
 public class RocketHandler {
 
+	private final ConfigurationSection   section;
 	private final File                   rocketFile;
 	private final YamlConfiguration      rocketFileConfig;
 	private final Map<String, ItemStack> rockets = new HashMap<>();
-	final         ConfigurationSection   section;
 
 	public RocketHandler(final Rocketeer rocketeer) {
 		rocketeer.saveResource("rockets.yml", false);
@@ -69,12 +69,20 @@ public class RocketHandler {
 		return new ArrayList<>(rockets.keySet());
 	}
 
+	/**
+	 * Load the data from the config into the map
+	 */
 	public void loadData() {
 		for (final String key : section.getKeys(false)) {
 			this.rockets.put(key, section.getItemStack(key));
 		}
 	}
 
+	/**
+	 * Save the data from the map into the config
+	 *
+	 * @throws IOException
+	 */
 	public void saveData() throws IOException {
 		for (Map.Entry<String, ItemStack> rocket : rockets.entrySet()) {
 			section.set(rocket.getKey(), rocket.getValue());

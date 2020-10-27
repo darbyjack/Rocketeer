@@ -13,7 +13,7 @@ public final class Rocketeer extends JavaPlugin {
 
 	private PaperCommandManager manager;
 	private NamespacedKey       key;
-	private RocketHandler rocketHandler;
+	private RocketHandler       rocketHandler;
 
 	@Override
 	public void onEnable() {
