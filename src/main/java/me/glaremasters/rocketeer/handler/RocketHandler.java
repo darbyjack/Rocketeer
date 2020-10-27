@@ -48,6 +48,7 @@ public class RocketHandler {
 	 */
 	public void removeRocket(final String name) {
 		rockets.remove(name);
+		section.set(name, null);
 	}
 
 	/**
