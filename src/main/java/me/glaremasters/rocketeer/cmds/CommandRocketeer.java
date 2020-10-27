@@ -33,10 +33,15 @@ public class CommandRocketeer extends BaseCommand {
 
 	@Subcommand("create")
 	@Syntax("<url>")
-	public void onCreate(final Player player, final String url) throws IOException {
-		final ItemStack stack = RocketUtils.encodeRocket(url, new ItemStack(Material.FIREWORK_ROCKET));
-		player.getInventory().addItem(stack);
-		player.sendMessage("You have created a new rocket from: " + url);
+	public void onCreate(final Player player, final String url) {
+		try {
+			final ItemStack stack = RocketUtils.encodeRocket(url, new ItemStack(Material.FIREWORK_ROCKET));
+			player.getInventory().addItem(stack);
+			player.sendMessage("You have created a new rocket from: " + url);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			player.sendMessage("There was an issue creating a rocket from the URL");
+		}
 	}
 
 	@Subcommand("give")
