@@ -21,7 +21,7 @@ public enum Messages implements MessageKeyProvider {
 
 	REMOVE__SUCCESS,
 
-	HEIGHT_SUCCESS;
+	HEIGHT__SUCCESS;
 
 	private final MessageKey key = MessageKey.of(name().toLowerCase().replace("__", ".").replace("_", "-"));
 
