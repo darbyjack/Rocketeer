@@ -1,11 +1,13 @@
 package me.glaremasters.rocketeer.cmds;
 
 import co.aikar.commands.BaseCommand;
+import co.aikar.commands.CommandHelp;
 import co.aikar.commands.CommandIssuer;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Dependency;
+import co.aikar.commands.annotation.HelpCommand;
 import co.aikar.commands.annotation.Single;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
@@ -88,6 +90,11 @@ public class CommandRocketeer extends BaseCommand {
 	public void onRemove(final CommandIssuer issuer, @Single @Values("@rockets") final String name) {
 		rocketeer.getRocketHandler().removeRocket(name);
 		getCurrentCommandIssuer().sendInfo(Messages.REMOVE__SUCCESS, "{rocket}", name);
+	}
+
+	@HelpCommand
+	public void onHelp(final CommandHelp help) {
+		help.showHelp();
 	}
 
 }
