@@ -68,7 +68,7 @@ public class CommandRocketeer extends BaseCommand {
 	@Subcommand("save")
 	@Syntax("<name>")
 	public void onSave(final Player player, @Single final String name) {
-		if (!rocketeer.getRocketHandler().hasRocket(name)) {
+		if (rocketeer.getRocketHandler().hasRocket(name)) {
 			getCurrentCommandIssuer().sendInfo(Messages.SAVE__ALREADY_EXISTS);
 			return;
 		}

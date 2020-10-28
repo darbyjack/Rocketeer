@@ -79,7 +79,6 @@ public class RocketUtils {
 	 */
 	public static void explode(final Firework firework, final Rocketeer rocketeer) throws IOException {
 		final PersistentDataContainer container = firework.getPersistentDataContainer();
-		System.out.println(container.getKeys());
 		final String data = container.get(rocketeer.getRegularKey(), PersistentDataType.STRING);
 		int range = 20;
 		if (container.has(rocketeer.getHeightKey(), PersistentDataType.INTEGER)) {
