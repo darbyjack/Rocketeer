@@ -27,6 +27,7 @@ public final class Rocketeer extends JavaPlugin {
 		this.rocketHandler = new RocketHandler(this);
 		this.rocketHandler.loadData();
 		this.manager = new PaperCommandManager(this);
+		this.manager.enableUnstableAPI("help");
 		loadLangFile();
 		this.manager.getCommandCompletions().registerCompletion("rockets", context -> this.rocketHandler.getRocketNames());
 		this.manager.registerCommand(new CommandRocketeer());

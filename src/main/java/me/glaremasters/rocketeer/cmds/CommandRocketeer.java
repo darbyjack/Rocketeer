@@ -3,6 +3,7 @@ package me.glaremasters.rocketeer.cmds;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.CommandIssuer;
+import co.aikar.commands.HelpEntry;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
@@ -22,6 +23,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by Glare
@@ -94,6 +97,7 @@ public class CommandRocketeer extends BaseCommand {
 
 	@HelpCommand
 	public void onHelp(final CommandHelp help) {
+		help.getHelpEntries().sort(Comparator.comparing(HelpEntry::getCommand));
 		help.showHelp();
 	}
 
