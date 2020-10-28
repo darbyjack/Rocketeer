@@ -10,3 +10,5 @@ list:
   display: "The following rockets exist: {rockets}"
 remove:
   success: "You have removed {rocket} from the list of rockets."
+height:
+  success: "You have successfully set the rocket's height to explode at {height} above the player."

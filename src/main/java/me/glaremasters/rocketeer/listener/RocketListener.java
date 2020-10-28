@@ -36,13 +36,17 @@ public class RocketListener implements Listener {
 		if (!RocketUtils.isCustomRocket(itemStack)) {
 			return;
 		}
-		projectile.getPersistentDataContainer().set(rocketeer.getKey(), PersistentDataType.STRING, RocketUtils.getImage(itemStack));
+		projectile.getPersistentDataContainer().set(rocketeer.getRegularKey(), PersistentDataType.STRING, RocketUtils.getImage(itemStack));
+		if (!RocketUtils.hasHeight(itemStack)) {
+			return;
+		}
+		projectile.getPersistentDataContainer().set(rocketeer.getHeightKey(), PersistentDataType.INTEGER, RocketUtils.getHeight(itemStack));
 	}
 
 	@EventHandler
 	public void onExplode(final FireworkExplodeEvent event) {
 		final Firework entity = event.getEntity();
-		if (!entity.getPersistentDataContainer().has(rocketeer.getKey(), PersistentDataType.STRING)) {
+		if (!entity.getPersistentDataContainer().has(rocketeer.getRegularKey(), PersistentDataType.STRING)) {
 			return;
 		}
 		try {

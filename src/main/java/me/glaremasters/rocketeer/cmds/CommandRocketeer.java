@@ -47,6 +47,15 @@ public class CommandRocketeer extends BaseCommand {
 		}
 	}
 
+	@Subcommand("height")
+	@Syntax("<height>")
+	public void onSetHeight(final Player player, final int height) {
+		ItemStack stack = player.getInventory().getItemInMainHand();
+		stack = RocketUtils.setHeight(stack, height);
+		player.getInventory().setItemInMainHand(stack);
+		getCurrentCommandIssuer().sendInfo(Messages.HEIGHT_SUCCESS, "{height}", String.valueOf(height));
+	}
+
 	@Subcommand("give")
 	@Syntax("<player> <rocket>")
 	@CommandCompletion("@players @rockets")

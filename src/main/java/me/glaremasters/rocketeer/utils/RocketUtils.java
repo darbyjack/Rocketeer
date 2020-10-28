@@ -7,6 +7,7 @@ import me.trysam.imagerenderer.util.Axis;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Firework;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import javax.imageio.ImageIO;
@@ -59,6 +60,17 @@ public class RocketUtils {
 	}
 
 	/**
+	 * Helper method to set the height a rocket
+	 *
+	 * @param itemStack the itemstack to modify
+	 * @param height    the height of the rocket
+	 * @return modified rocket with set height
+	 */
+	public static ItemStack setHeight(final ItemStack itemStack, final int height) {
+		return NBTEditor.set(itemStack, height, "rocketHeight");
+	}
+
+	/**
 	 * Explode a firework with an image
 	 *
 	 * @param firework  the firework to explode
@@ -66,12 +78,19 @@ public class RocketUtils {
 	 * @throws IOException
 	 */
 	public static void explode(final Firework firework, final Rocketeer rocketeer) throws IOException {
-		final String data = firework.getPersistentDataContainer().get(rocketeer.getKey(), PersistentDataType.STRING);
+		final PersistentDataContainer container = firework.getPersistentDataContainer();
+		System.out.println(container.getKeys());
+		final String data = container.get(rocketeer.getRegularKey(), PersistentDataType.STRING);
+		int range = 20;
+		if (container.has(rocketeer.getHeightKey(), PersistentDataType.INTEGER)) {
+			range = container.get(rocketeer.getHeightKey(), PersistentDataType.INTEGER);
+		}
 		final BufferedImage image = ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(data)));
+		final int finalRange = range;
 		Bukkit.getScheduler().runTaskLater(rocketeer, () -> {
-			final ParticleImageRenderingAPI renderingAPI = new ParticleImageRenderingAPI(image, firework.getLocation().add(0.0, 20.0, 0.0));
+			final ParticleImageRenderingAPI renderingAPI = new ParticleImageRenderingAPI(image, firework.getLocation().add(0.0, finalRange, 0.0));
 			renderingAPI.rotate(Axis.Z, 180.0f);
-			renderingAPI.renderImage(Bukkit.getOnlinePlayers());
+			renderingAPI.renderImage(true, Bukkit.getOnlinePlayers());
 		}, 5L);
 	}
 
@@ -83,6 +102,20 @@ public class RocketUtils {
 	 */
 	public static String getImage(final ItemStack itemStack) {
 		return NBTEditor.getString(itemStack, "rocketeer");
+	}
+
+	public static boolean hasHeight(final ItemStack itemStack) {
+		return NBTEditor.contains(itemStack, "rocketHeight");
+	}
+
+	/**
+	 * Helper method to get the height a rocket should be
+	 *
+	 * @param itemStack the itemstack to check
+	 * @return the height of the rocket
+	 */
+	public static int getHeight(final ItemStack itemStack) {
+		return NBTEditor.getInt(itemStack, "rocketHeight");
 	}
 
 }

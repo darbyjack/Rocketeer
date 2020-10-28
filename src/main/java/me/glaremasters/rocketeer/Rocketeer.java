@@ -15,13 +15,15 @@ import java.util.Locale;
 public final class Rocketeer extends JavaPlugin {
 
 	private PaperCommandManager manager;
-	private NamespacedKey       key;
+	private NamespacedKey       regularKey;
+	private NamespacedKey		heightKey;
 	private RocketHandler       rocketHandler;
 
 	@Override
 	public void onEnable() {
 		saveDefaultConfig();
-		this.key = new NamespacedKey(this, "rocketeer");
+		this.regularKey = new NamespacedKey(this, "rocketeer");
+		this.heightKey = new NamespacedKey(this, "rocketHeight");
 		this.rocketHandler = new RocketHandler(this);
 		this.rocketHandler.loadData();
 		this.manager = new PaperCommandManager(this);
@@ -45,8 +47,8 @@ public final class Rocketeer extends JavaPlugin {
 		return manager;
 	}
 
-	public NamespacedKey getKey() {
-		return key;
+	public NamespacedKey getRegularKey() {
+		return regularKey;
 	}
 
 	public RocketHandler getRocketHandler() {
@@ -67,6 +69,10 @@ public final class Rocketeer extends JavaPlugin {
 		}
 
 		this.manager.getLocales().setDefaultLocale(Locale.ENGLISH);
+	}
+
+	public NamespacedKey getHeightKey() {
+		return heightKey;
 	}
 
 }
