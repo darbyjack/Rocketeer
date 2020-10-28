@@ -36,7 +36,7 @@ public class RocketUtils {
 	public static ItemStack encodeRocket(final String url, final ItemStack sourceItem) throws IOException {
 		final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		final BufferedImage sourceImage = ImageIO.read(new URL(url));
-		final BufferedImage tempImage = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
+		final BufferedImage tempImage = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
 		final Graphics2D graphics = tempImage.createGraphics();
 
 		graphics.drawImage(sourceImage, 0, 0, 64, 64, null);

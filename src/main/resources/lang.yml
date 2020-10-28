@@ -1,0 +1,12 @@
+create:
+  success: "You have created a new rocket from {url}."
+  error: "There was an issue creating a rocket from the URL. Check console for errors."
+give:
+  success: "You have given {player} a rocket by the name of {rocket}."
+save:
+  success: "You have successfully saved a new rocket named {rocket}."
+  already-exists: "You already have a rocket by the name of {rocket}. Please remove it first to create another by this name."
+list:
+  display: "The following rockets exist: {rockets}"
+remove:
+  success: "You have removed {rocket} from the list of rockets."

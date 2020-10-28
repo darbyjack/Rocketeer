@@ -6,11 +6,13 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Dependency;
+import co.aikar.commands.annotation.Single;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
 import co.aikar.commands.annotation.Values;
 import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import me.glaremasters.rocketeer.Rocketeer;
+import me.glaremasters.rocketeer.messages.Messages;
 import me.glaremasters.rocketeer.utils.RocketUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
@@ -33,44 +35,50 @@ public class CommandRocketeer extends BaseCommand {
 
 	@Subcommand("create")
 	@Syntax("<url>")
-	public void onCreate(final Player player, final String url) {
+	public void onCreate(final Player player, @Single final String url) {
 		try {
 			final ItemStack stack = RocketUtils.encodeRocket(url, new ItemStack(Material.FIREWORK_ROCKET));
 			player.getInventory().addItem(stack);
-			player.sendMessage("You have created a new rocket from: " + url);
-		} catch (IOException ex) {
+			getCurrentCommandIssuer().sendInfo(Messages.CREATE__SUCCESS, "{url}", url);
+		}
+		catch (IOException ex) {
 			ex.printStackTrace();
-			player.sendMessage("There was an issue creating a rocket from the URL");
+			getCurrentCommandIssuer().sendInfo(Messages.CREATE__ERROR);
 		}
 	}
 
 	@Subcommand("give")
 	@Syntax("<player> <rocket>")
 	@CommandCompletion("@players @rockets")
-	public void onGive(final CommandIssuer issuer, final OnlinePlayer onlinePlayer, final String name) {
-		onlinePlayer.getPlayer().getInventory().addItem(rocketeer.getRocketHandler().getRocket(name));
-		issuer.sendMessage("You have given {player} {rocket}".replace("{player}", onlinePlayer.getPlayer().getName()).replace("{rocket}", name));
+	public void onGive(final CommandIssuer issuer, final OnlinePlayer onlinePlayer, @Single @Values("@rockets") final String name) {
+		final Player player = onlinePlayer.getPlayer();
+		player.getInventory().addItem(rocketeer.getRocketHandler().getRocket(name));
+		getCurrentCommandIssuer().sendInfo(Messages.GIVE__SUCCESS, "{player}", player.getName(), "{rocket}", name);
 	}
 
 	@Subcommand("save")
 	@Syntax("<name>")
-	public void onSave(final Player player, final String name) {
+	public void onSave(final Player player, @Single final String name) {
+		if (!rocketeer.getRocketHandler().hasRocket(name)) {
+			getCurrentCommandIssuer().sendInfo(Messages.SAVE__ALREADY_EXISTS);
+			return;
+		}
 		final ItemStack stack = player.getInventory().getItemInMainHand();
 		rocketeer.getRocketHandler().addRocket(name, stack);
-		player.sendMessage("You have saved {name} to the list of available rockets".replace("{name}", name));
+		getCurrentCommandIssuer().sendInfo(Messages.SAVE__SUCCESS, "{rocket}", name);
 	}
 
 	@Subcommand("list")
 	public void onList(CommandIssuer issuer) {
-		issuer.sendMessage("The following rockets exist: " + StringUtils.join(rocketeer.getRocketHandler().getRocketNames(), ", "));
+		getCurrentCommandIssuer().sendInfo(Messages.LIST__DISPLAY, "{rockets}", StringUtils.join(rocketeer.getRocketHandler().getRocketNames(), ", "));
 	}
 
 	@Subcommand("remove")
 	@Syntax("<name>")
 	@CommandCompletion("@rockets")
-	public void onRemove(final CommandIssuer issuer, @Values("@rockets") final String name) {
+	public void onRemove(final CommandIssuer issuer, @Single @Values("@rockets") final String name) {
 		rocketeer.getRocketHandler().removeRocket(name);
-		issuer.sendMessage("You have removed {name} from the list of rockets.".replace("{name}", name));
+		getCurrentCommandIssuer().sendInfo(Messages.REMOVE__SUCCESS, "{rocket}", name);
 	}
 
 }

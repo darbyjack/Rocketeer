@@ -62,6 +62,16 @@ public class RocketHandler {
 	}
 
 	/**
+	 * Helper method to see if a rocket exists or not
+	 *
+	 * @param name the name of the rocket to check
+	 * @return exists or not in the map
+	 */
+	public boolean hasRocket(final String name) {
+		return rockets.containsKey(name);
+	}
+
+	/**
 	 * Helper method to get all the names of the rockets
 	 *
 	 * @return names of all of the rockets
