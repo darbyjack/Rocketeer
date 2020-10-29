@@ -1,14 +1,14 @@
 create:
-  success: "You have created a new rocket from {url}."
-  error: "There was an issue creating a rocket from the URL. Check console for errors."
+  success: "&8[&3Rocketeer&8] &7You have created a new rocket from &e{url}&7."
+  error: "&8[&3Rocketeer&8] &cThere was an issue creating a rocket from the URL. Check console for errors."
 give:
-  success: "You have given {player} a rocket by the name of {rocket}."
+  success: "&8[&3Rocketeer&8] &7You have given &e{player} &7a rocket by the name of &e{rocket}&7."
 save:
-  success: "You have successfully saved a new rocket named {rocket}."
-  already-exists: "You already have a rocket by the name of {rocket}. Please remove it first to create another by this name."
+  success: "&8[&3Rocketeer&8] &7You have successfully saved a new rocket named &e{rocket}&7."
+  already-exists: "&8[&3Rocketeer&8] &cYou already have a rocket by the name of &e{rocket}&c. &7Please remove it first to create another by this name."
 list:
-  display: "The following rockets exist: {rockets}"
+  display: "&8[&3Rocketeer&8] &7The following rockets exist: &e{rockets}"
 remove:
-  success: "You have removed {rocket} from the list of rockets."
+  success: "&8[&3Rocketeer&8] &7You have removed &e{rocket}&7 from the list of rockets."
 height:
-  success: "You have successfully set the rocket's height to explode at {height} above the player."
+  success: "&8[&3Rocketeer&8] &7You have successfully set the rocket's height to explode at &e{height}&7 above the player."
