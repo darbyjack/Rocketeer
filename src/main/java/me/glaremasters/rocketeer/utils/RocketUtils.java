@@ -16,6 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Base64;
 
@@ -36,7 +37,10 @@ public class RocketUtils {
 	 */
 	public static ItemStack encodeRocket(final String url, final ItemStack sourceItem) throws IOException {
 		final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		final BufferedImage sourceImage = ImageIO.read(new URL(url));
+		final URL link = new URL(url);
+		final HttpURLConnection connection = (HttpURLConnection) link.openConnection();
+		connection.addRequestProperty("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36");
+		final BufferedImage sourceImage = ImageIO.read(connection.getInputStream());
 		final BufferedImage tempImage = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
 		final Graphics2D graphics = tempImage.createGraphics();
 
@@ -46,6 +50,7 @@ public class RocketUtils {
 		ImageIO.write(tempImage, "png", outputStream);
 
 		final String encoded = Base64.getEncoder().encodeToString(outputStream.toByteArray());
+		connection.disconnect();
 		return NBTEditor.set(sourceItem, encoded, "rocketeer");
 	}
 
