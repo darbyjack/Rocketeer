@@ -20,10 +20,10 @@ package me.trysam.imagerenderer.particle;
 
 import me.trysam.imagerenderer.math.Vec3d;
 import me.trysam.imagerenderer.math.Vec3f;
-import net.minecraft.server.v1_16_R2.PacketPlayOutWorldParticles;
-import net.minecraft.server.v1_16_R2.ParticleParam;
+import net.minecraft.server.v1_16_R3.PacketPlayOutWorldParticles;
+import net.minecraft.server.v1_16_R3.ParticleParam;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 /**
@@ -55,7 +55,7 @@ public class ParticleRenderer implements Renderer {
 	private int   amount;
 
 	/**
-	 * @param particleParam Particle type. Refer to {@link net.minecraft.server.v1_16_R2.Particles}
+	 * @param particleParam Particle type. Refer to {@link net.minecraft.server.v1_16_R3.Particles}
 	 * @param far           Determines whether or not the particle will be visible from far.
 	 * @param location      Location, where the particle will be rendered. Represented as a {@link org.bukkit.Location}
 	 * @param size          Particle scale/movement direction.
@@ -67,7 +67,7 @@ public class ParticleRenderer implements Renderer {
 	}
 
 	/**
-	 * @param particleParam Particle type. Refer to {@link net.minecraft.server.v1_16_R2.Particles}
+	 * @param particleParam Particle type. Refer to {@link net.minecraft.server.v1_16_R3.Particles}
 	 * @param far           Determines whether or not the particle will be visible from far.
 	 * @param location      Location, where the particle will be rendered. Represented as a {@link me.trysam.imagerenderer.math.Vec3d}.
 	 * @param size          Particle scale/movement direction.
@@ -84,7 +84,7 @@ public class ParticleRenderer implements Renderer {
 	}
 
 	/**
-	 * @param particleParam Particle type. Refer to {@link net.minecraft.server.v1_16_R2.Particles}
+	 * @param particleParam Particle type. Refer to {@link net.minecraft.server.v1_16_R3.Particles}
 	 * @param far           Determines whether or not the particle will be visible from far.
 	 * @param x             X-Coordinate of the location, where the particle will be rendered.
 	 * @param y             Y-Coordinate of the location, where the particle will be rendered.

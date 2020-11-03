@@ -21,7 +21,7 @@ package me.trysam.imagerenderer.particle;
 import me.trysam.imagerenderer.math.Quaternion;
 import me.trysam.imagerenderer.math.Vec3d;
 import me.trysam.imagerenderer.math.Vec3f;
-import net.minecraft.server.v1_16_R2.ParticleParamRedstone;
+import net.minecraft.server.v1_16_R3.ParticleParamRedstone;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
