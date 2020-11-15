@@ -1,7 +1,7 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
-	id "com.github.johnrengelman.shadow" version "5.2.0"
+	id "com.github.johnrengelman.shadow" version "6.1.0"
 	id "java"
 }
 
@@ -32,7 +32,7 @@ repositories {
 	}
 	maven {
 		name = "codemc"
-		url = "https://repo.codemc.org/repository/maven-public"
+		url = "https://repo.codemc.io/repository/maven-public"
 	}
 }
 
@@ -47,7 +47,7 @@ dependencies {
 	compileOnly 'com.destroystokyo.paper:paper-api:1.16.4-R0.1-SNAPSHOT'
 	
 	implementation 'co.aikar:acf-paper:0.5.0-SNAPSHOT'
-	implementation 'io.github.bananapuncher714:NBTEditor:7.16'
+	implementation 'io.github.bananapuncher714:nbteditor:7.16.1'
 }
 
 shadowJar {
