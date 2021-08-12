@@ -1,15 +1,15 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
-	id "com.github.johnrengelman.shadow" version "6.1.0"
+	id "com.github.johnrengelman.shadow" version "7.0.0"
 	id "java"
 }
 
 group = 'me.glaremasters'
 version = '1.0-SNAPSHOT'
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_16
+targetCompatibility = JavaVersion.VERSION_16
 
 repositories {
 	mavenLocal()
@@ -43,11 +43,10 @@ compileJava {
 }
 
 dependencies {
-	compileOnly 'org.spigotmc:spigot:1.16.4-R0.1-SNAPSHOT'
-	compileOnly 'com.destroystokyo.paper:paper-api:1.16.4-R0.1-SNAPSHOT'
-	
+	compileOnly 'io.papermc.paper:paper:1.17.1-R0.1-SNAPSHOT'
+
 	implementation 'co.aikar:acf-paper:0.5.0-SNAPSHOT'
-	implementation 'io.github.bananapuncher714:nbteditor:7.16.1'
+	implementation 'io.github.bananapuncher714:nbteditor:7.17.0'
 }
 
 shadowJar {
@@ -63,9 +62,7 @@ tasks.withType(JavaCompile) {
 }
 
 processResources {
-	from(sourceSets.main.resources.srcDirs) {
-		filter ReplaceTokens, tokens: [version: version]
-	}
+	filter ReplaceTokens, tokens: [version: version]
 }
 
 tasks.build.dependsOn tasks.shadowJar

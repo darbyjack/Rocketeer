@@ -18,10 +18,11 @@
 
 package me.trysam.imagerenderer.particle;
 
+import com.mojang.math.Vector3fa;
 import me.trysam.imagerenderer.math.Quaternion;
 import me.trysam.imagerenderer.math.Vec3d;
 import me.trysam.imagerenderer.math.Vec3f;
-import net.minecraft.server.v1_16_R3.ParticleParamRedstone;
+import net.minecraft.core.particles.ParticleParamRedstone;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -82,7 +83,7 @@ public class ImageRenderer implements Renderer {
 		setImage(image);
 
 		this.center = new Vec3d(cx, cy, cz);
-		renderer = new ParticleRenderer(new ParticleParamRedstone(0, 0, 0, 4), far, 0, 0, 0, sx, sy, sz, speed, amount);
+		renderer = new ParticleRenderer(new ParticleParamRedstone(new Vector3fa(0, 0, 0), 4), far, 0, 0, 0, sx, sy, sz, speed, amount);
 	}
 
 	/**
@@ -125,7 +126,7 @@ public class ImageRenderer implements Renderer {
 				}
 
 				//Set the color of the particle param to the pixel color
-				renderer.setParticleParam(new ParticleParamRedstone(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, 4.0f));
+				renderer.setParticleParam(new ParticleParamRedstone(new Vector3fa(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f), 4.0f));
 				renderer.render(player);
 
 			}
