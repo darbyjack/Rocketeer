@@ -39,7 +39,7 @@ java {
 
 tasks {
 	build {
-		dependsOn(reobfJar, shadowJar)
+		dependsOn(reobfJar)
 	}
 
 	compileJava {
@@ -72,8 +72,6 @@ tasks {
 		minimize()
 
 		archiveClassifier.set(null as String?)
-		archiveFileName.set("rocketeer-${project.version}-dev.jar")
-		destinationDirectory.set(rootProject.tasks.shadowJar.get().destinationDirectory.get())
 	}
 
 	processResources {
