@@ -1,5 +1,5 @@
 name: Rocketeer
-version: @version@
+version: ${version}
 main: me.glaremasters.rocketeer.Rocketeer
 api-version: 1.16
 authors: [ Glare ]

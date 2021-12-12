@@ -20,10 +20,10 @@ package me.trysam.imagerenderer.particle;
 
 import me.trysam.imagerenderer.math.Vec3d;
 import me.trysam.imagerenderer.math.Vec3f;
-import net.minecraft.core.particles.ParticleParam;
-import net.minecraft.network.protocol.game.PacketPlayOutWorldParticles;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.network.protocol.game.ClientboundLevelParticlesPacket;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 /**
@@ -32,9 +32,9 @@ import org.bukkit.entity.Player;
 public class ParticleRenderer implements Renderer {
 
 	/**
-	 * Particle type. Refer to {@link net.minecraft.core.particles.ParticleParam}
+	 * Particle type. Refer to {@link net.minecraft.core.particles.ParticleOptions}
 	 */
-	private ParticleParam particleParam;
+	private ParticleOptions particleParam;
 
 	/**
 	 * Determines whether or not the particle will be visible from far
@@ -55,26 +55,26 @@ public class ParticleRenderer implements Renderer {
 	private int   amount;
 
 	/**
-	 * @param particleParam Particle type. Refer to {@link net.minecraft.core.particles.ParticleParam}
+	 * @param particleParam Particle type. Refer to {@link net.minecraft.core.particles.ParticleOptions}
 	 * @param far           Determines whether or not the particle will be visible from far.
 	 * @param location      Location, where the particle will be rendered. Represented as a {@link org.bukkit.Location}
 	 * @param size          Particle scale/movement direction.
 	 * @param speed         Speed of the particle.
 	 * @param amount        Amount of particles that will be rendered.
 	 */
-	public ParticleRenderer(ParticleParam particleParam, boolean far, Location location, Vec3f size, float speed, int amount) {
+	public ParticleRenderer(ParticleOptions particleParam, boolean far, Location location, Vec3f size, float speed, int amount) {
 		this(particleParam, far, Vec3d.fromLocation(location), size, speed, amount);
 	}
 
 	/**
-	 * @param particleParam Particle type. Refer to {@link net.minecraft.core.particles.ParticleParam}
+	 * @param particleParam Particle type. Refer to {@link net.minecraft.core.particles.ParticleOptions}
 	 * @param far           Determines whether or not the particle will be visible from far.
 	 * @param location      Location, where the particle will be rendered. Represented as a {@link me.trysam.imagerenderer.math.Vec3d}.
 	 * @param size          Particle scale/movement direction.
 	 * @param speed         Speed of the particle.
 	 * @param amount        Amount of particles that will be rendered.
 	 */
-	public ParticleRenderer(ParticleParam particleParam, boolean far, Vec3d location, Vec3f size, float speed, int amount) {
+	public ParticleRenderer(ParticleOptions particleParam, boolean far, Vec3d location, Vec3f size, float speed, int amount) {
 		this.particleParam = particleParam;
 		this.far = far;
 		this.location = location;
@@ -84,7 +84,7 @@ public class ParticleRenderer implements Renderer {
 	}
 
 	/**
-	 * @param particleParam Particle type. Refer to {@link net.minecraft.core.particles.ParticleParam}
+	 * @param particleParam Particle type. Refer to {@link net.minecraft.core.particles.ParticleOptions}
 	 * @param far           Determines whether or not the particle will be visible from far.
 	 * @param x             X-Coordinate of the location, where the particle will be rendered.
 	 * @param y             Y-Coordinate of the location, where the particle will be rendered.
@@ -95,7 +95,7 @@ public class ParticleRenderer implements Renderer {
 	 * @param speed         Speed of the particle.
 	 * @param amount        Amount of particles that will be rendered.
 	 */
-	public ParticleRenderer(ParticleParam particleParam, boolean far, double x, double y, double z, float sx, float sy, float sz, float speed, int amount) {
+	public ParticleRenderer(ParticleOptions particleParam, boolean far, double x, double y, double z, float sx, float sy, float sz, float speed, int amount) {
 		this(particleParam, far, new Vec3d(x, y, z), new Vec3f(sx, sy, sz), speed, amount);
 	}
 
@@ -105,20 +105,19 @@ public class ParticleRenderer implements Renderer {
 	 */
 	@Override
 	public void render(final Player player) {
-		PacketPlayOutWorldParticles particles =
-				new PacketPlayOutWorldParticles(particleParam, far, location.getX(), location.getY(), location.getZ(),
-												size.getX(), size.getY(), size.getZ(), speed, amount);
+		ClientboundLevelParticlesPacket particles = new ClientboundLevelParticlesPacket(particleParam, far, location.getX(), location.getY(), location.getZ(),
+				size.getX(), size.getY(), size.getZ(), speed, amount);
 
 		//Gets the NMS player representation and sends the particle packet.
-		((CraftPlayer) player).getHandle().b.sendPacket(particles);
+		((CraftPlayer) player).getHandle().connection.send(particles);
 	}
 
 
-	public ParticleParam getParticleParam() {
+	public ParticleOptions getParticleParam() {
 		return particleParam;
 	}
 
-	public void setParticleParam(final ParticleParam particleParam) {
+	public void setParticleParam(final ParticleOptions particleParam) {
 		this.particleParam = particleParam;
 	}
 
