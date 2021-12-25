@@ -4,7 +4,7 @@ import net.kyori.indra.IndraPlugin
 plugins {
 	id("java")
 	id("net.kyori.indra") version "2.0.6"
-	id("io.papermc.paperweight.userdev") version "1.3.2"
+	id("io.papermc.paperweight.userdev") version "1.3.3"
 	id("com.github.johnrengelman.shadow") version "7.1.0"
 }
 
@@ -17,13 +17,11 @@ apply {
 }
 
 repositories {
-	mavenLocal()
 	mavenCentral()
 	maven("https://papermc.io/repo/repository/maven-public/")
 	maven("https://oss.sonatype.org/content/groups/public/")
 	maven("https://repo.aikar.co/content/groups/aikar/")
-	maven("https://jitpack.io")
-	maven("https://repo.codemc.io/repository/maven-public")
+	maven("https://repo.codemc.org/repository/maven-public/")
 }
 
 dependencies {
