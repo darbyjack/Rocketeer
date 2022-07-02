@@ -3,9 +3,9 @@ import net.kyori.indra.IndraPlugin
 
 plugins {
 	id("java")
-	id("net.kyori.indra") version "2.0.6"
-	id("io.papermc.paperweight.userdev") version "1.3.3"
-	id("com.github.johnrengelman.shadow") version "7.1.0"
+	id("net.kyori.indra") version "2.1.1"
+	id("io.papermc.paperweight.userdev") version "1.3.7"
+	id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 group = "me.glaremasters"
@@ -25,10 +25,10 @@ repositories {
 }
 
 dependencies {
-	paperDevBundle("1.18.1-R0.1-SNAPSHOT")
+	paperDevBundle("1.19-R0.1-SNAPSHOT")
 
-	implementation("co.aikar:acf-paper:0.5.0-SNAPSHOT")
-	implementation("io.github.bananapuncher714:nbteditor:7.18.0")
+	implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
+	implementation("io.github.bananapuncher714:nbteditor:7.18.3")
 }
 
 java {
